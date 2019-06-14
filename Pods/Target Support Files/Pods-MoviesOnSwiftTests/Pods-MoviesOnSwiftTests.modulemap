@@ -1,0 +1,6 @@
+framework module Pods_MoviesOnSwiftTests {
+  umbrella header "Pods-MoviesOnSwiftTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
