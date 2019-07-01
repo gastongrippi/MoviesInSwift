@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MoviesOnSwift/Model/Movie.swift"
-            timestampString = "582238821.807164"
+            filePath = "MoviesOnSwift/Controller/MoviesController.swift"
+            timestampString = "583181596.737077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
-            landmarkName = "init(from:)"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "loadTopRatedMovies(endpoint:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MoviesOnSwift/Controller/MoviesController.swift"
-            timestampString = "582238821.807676"
+            timestampString = "583181596.7376029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
-            landmarkName = "makeRequestWithURL(_:)"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

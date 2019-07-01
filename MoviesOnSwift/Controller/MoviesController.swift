@@ -6,57 +6,47 @@
 //  Copyright © 2019 Gaston Daniel Gabriel Grippi. All rights reserved.
 //
 
-import UIKit
 import Alamofire
 
 class MoviesController: UIViewController {
-    
+
     // MARK: - Properties
     let baseUrl = "https://api.themoviedb.org/3/movie/top_rated?api_key="
     let apiKey = "208ca80d1e219453796a7f9792d16776"
-    
-    
-    var topRatedMovies = [String:AnyObject]()
-    var movies : [Movie]?
+    var movies = [Movie]()
+    var moviesView : MoviesView?
 
-    
     // MARK: - Lifecycle
     override func loadView() {
         super.loadView()
-        self.view = MoviesView()
+        moviesView = MoviesView(frame: .zero)
+        moviesView?.setDelegate(delegate: self)
+        self.view = moviesView
         self.title = "Lista de peliculas"
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Load initial API data
-        makeRequestWithURL(baseUrl+apiKey)
+        loadTopRatedMovies(endpoint: baseUrl+apiKey)
     }
     
-    
-    // MARK: -
+    // MARK: - private methods
+    func loadTopRatedMovies(endpoint: String) -> Void {
+        MoviesManager.shared.makeMovieRequestWithURL(endpoint,success: { DefaultDataResponse in
+            let jsonResult = try? JSONSerialization.jsonObject(with: DefaultDataResponse.data!, options: []) as? [String:AnyObject]
+            
+            if let results = jsonResult?["results"] as? [Any] {
+                for movieObject in results {
+                    let jsonData = try? JSONSerialization.data(withJSONObject: movieObject, options: .prettyPrinted)
+                    if let movie = try? JSONDecoder().decode(Movie.self, from: jsonData!) {
+                        print(movie.title)
+                        self.movies.append(movie)
+                    }
+                }
+                self.moviesView?.tableView.reloadData()
+            }
+        })
+    }
 
-    func loadTopRatedMovies() {
-        
-    }
-    
-    func makeRequestWithURL(_ endpoint: String) -> Void {
-        Alamofire.request(endpoint,
-                          method: .get,
-                          parameters: nil,
-                          encoding: JSONEncoding(options:.prettyPrinted),
-                          headers: nil).validate().responseJSON { (DefaultDataResponse) in
-
-                            let jsonResult = try? JSONSerialization.jsonObject(with: DefaultDataResponse.data!, options: []) as? [String:AnyObject]
-                            
-                            if let results = jsonResult?["results"] as? [Any] {
-                                let jsonData = try? JSONSerialization.data(withJSONObject: results[0], options: .prettyPrinted)
-                                if let movie = try? JSONDecoder().decode(Movie.self, from: jsonData!) {
-                                    print(movie.title)
-                                }
-                            }
-        }
-    }
-        
 }
-

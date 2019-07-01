@@ -13,7 +13,11 @@ import SnapKit
 class MoviesView : UIView {
 
 // MARK: - Properties
+    
     var tableView = UITableView()
+    var moviesControllerDelegate : MoviesControllerDelegate?
+    
+// MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,10 +28,20 @@ class MoviesView : UIView {
         tableView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(self)
         }
+        // set delegates
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    
+    // MARK: - public methods
+    
+    func setDelegate(delegate: MoviesControllerDelegate) {
+        moviesControllerDelegate = delegate
     }
     
 }
